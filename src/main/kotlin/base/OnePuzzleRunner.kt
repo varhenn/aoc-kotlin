@@ -27,7 +27,11 @@ class OnePuzzleRunner<OutputPart1, OutputPart2>(
         val (result, time) = measureExecution { solver(input) }
         val evaluation = evaluateResult(expected, result)
         val timeStr = "${time.inWholeMilliseconds}ms".padStart(6)
-        val notes = if (evaluation == "NOK") "Expected: $expected, Got: $result" else ""
+        val notes = when (evaluation) {
+            "" -> "Got: $result"
+            "NOK" -> "Expected: $expected, Got: $result"
+            else -> ""
+        }
         rows.add(listOf(part, type, evaluation, timeStr, notes))
     } catch (e: Exception) {
         rows.add(listOf(part, type, "NOK", "-", e.toString()))
@@ -49,7 +53,7 @@ class OnePuzzleRunner<OutputPart1, OutputPart2>(
         val widths = headers.indices.map { i -> (listOf(headers) + rows).maxOf { it[i].length } }
         val table = (listOf(headers) + rows).joinToString("\n") { row ->
             row.mapIndexed { i, col ->
-                col.padStart((widths[i] + col.length) / 2).padEnd(widths[i])
+                if (i < 4) col.padStart((widths[i] + col.length) / 2).padEnd(widths[i]) else col
             }.joinToString(" | ")
         }
         println(table)
