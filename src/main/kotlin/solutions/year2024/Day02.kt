@@ -1,4 +1,4 @@
-package solutions.year2024
+package solutions.year2024.day02
 
 import base.Input
 import base.OnePuzzleRunner
@@ -12,25 +12,21 @@ class Day02 : Puzzle<Int, Int>() {
     override val part1answers: Map<String, Int?> = mapOf("sample" to 2, "puzzle" to 502)
     override val part2answers: Map<String, Int?> = mapOf("sample" to 4, "puzzle" to 544)
 
-    override fun solvePart1(input: Input) = Solver(input).strictlySafe()
+    override fun solvePart1(input: Input) = safe(input) { report, range -> deltasInRange(report, range) }
 
-    override fun solvePart2(input: Input) = Solver(input).tolerateSafe()
-}
+    override fun solvePart2(input: Input) = safe(input) { report, range ->
+        report.indices.any { idx -> deltasInRange(report.withoutElementAt(idx), range) }
+    }
 
-class Solver(input: Input) {
-    private val reports: List<List<Int>> = input.asListOfIntLists()
-    private val ranges = listOf(1..3, -3..-1)
+    companion object {
+        private val ranges = listOf(1..3, -3..-1)
 
-    fun strictlySafe(): Int = safe { report, range -> deltasInRange(report, range) }
+        private fun safe(input: Input, block: (report: List<Int>, range: IntRange) -> Boolean): Int =
+            input.asListOfIntLists().count { report -> ranges.any { range -> block(report, range) } }
 
-    fun tolerateSafe(): Int =
-        safe { report, range -> report.indices.any { idx -> deltasInRange(report.withoutElementAt(idx), range) } }
+        private fun deltasInRange(report: List<Int>, range: IntRange): Boolean =
+            report.zipWithNext().all { (a, b) -> a - b in range }
 
-    private fun safe(block: (report: List<Int>, range: IntRange) -> Boolean): Int =
-        reports.count { report -> ranges.any { range -> block(report, range) } }
-
-    private fun deltasInRange(report: List<Int>, range: IntRange): Boolean =
-        report.zipWithNext().all { (a, b) -> a - b in range }
-
-    private fun List<Int>.withoutElementAt(index: Int): List<Int> = this.filterIndexed { i, _ -> i != index }
+        private fun List<Int>.withoutElementAt(index: Int): List<Int> = this.filterIndexed { i, _ -> i != index }
+    }
 }
