@@ -8,6 +8,8 @@ class Input private constructor(private val data: String) {
 
     fun asLines(): List<String> = asText().lines()
 
+    fun asListOfCharLists(): List<List<Char>> = asLines().map { line -> line.map { it } }
+
     fun asListOfIntLists(): List<List<Int>> = asLines().map { it.toIntList() }
 
     companion object {
