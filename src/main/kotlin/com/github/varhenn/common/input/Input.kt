@@ -18,5 +18,10 @@ fun String.toListOfCharLists(): List<List<Char>> = this.lines().map { line -> li
 
 fun String.toListOfIntLists(): List<List<Int>> = this.lines().map { it.toIntList() }
 
-fun String.toIntList(delimiter: Regex = Regex("\\s+")): List<Int> =
+fun String.toListOfLongLists(): List<List<Long>> = this.lines().map { it.toLongList() }
+
+fun String.toIntList(delimiter: Regex = Regex("\\D+")): List<Int> =
     this.split(delimiter).mapNotNull { it.toIntOrNull() }
+
+fun String.toLongList(delimiter: Regex = Regex("\\D+")): List<Long> =
+    this.split(delimiter).mapNotNull { it.toLongOrNull() }
