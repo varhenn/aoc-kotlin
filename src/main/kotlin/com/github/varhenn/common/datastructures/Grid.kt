@@ -14,5 +14,7 @@ class Grid<T>(data: List<List<T>>, private val default: (Point) -> T) {
 
     operator fun get(coordinate: Point): T = data[coordinate] ?: default(coordinate)
 
+    operator fun contains(coordinate: Point): Boolean = coordinate in data
+
     fun indices(): Set<Point> = data.keys
 }
