@@ -2,7 +2,9 @@ package com.github.varhenn.common.datastructures
 
 data class Point(val x: Int, val y: Int) {
     operator fun plus(other: Point) = Point(x + other.x, y + other.y)
+    operator fun minus(other: Point) = Point(x - other.x, y - other.y)
     operator fun times(scalar: Int) = Point(x * scalar, y * scalar)
+    operator fun unaryMinus() = Point(-x, -y)
 
     companion object {
         fun allDirections(): List<Point> =
