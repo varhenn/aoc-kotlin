@@ -2,7 +2,7 @@ package com.github.varhenn.common.input
 
 import java.io.File
 
-private const val AOC_DATA_PATH = "AOC_DATA_PATH"
+const val AOC_DATA_PATH = "AOC_DATA_PATH"
 
 fun fromFile(year: Int, day: Int, type: String): String {
     val dataPath = System.getenv(AOC_DATA_PATH)
@@ -11,7 +11,7 @@ fun fromFile(year: Int, day: Int, type: String): String {
 
     require(!dataPath.isNullOrEmpty()) { "Environment variable AOC_DATA_PATH is not set" }
     require(file.exists() && file.isFile) { "File does not exist: $file" }
-    return file.readText()
+    return file.readText().trim()
 }
 
 fun String.toListOfCharLists(): List<List<Char>> = this.lines().map { line -> line.map { it } }
