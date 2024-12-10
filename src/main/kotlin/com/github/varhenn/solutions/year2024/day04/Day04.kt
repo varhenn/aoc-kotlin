@@ -18,7 +18,7 @@ class Day04 : Solution<Int>() {
     override fun solvePart1(input: String): Int = solve(
         grid = Grid(input.toListOfCharLists()) { ' ' },
         word = "XMAS".toList(),
-        shapes = Point.allDirections().map { delta -> "XMAS".indices.map { delta * it } }
+        shapes = Point.allNeighboringDirections().map { delta -> "XMAS".indices.map { delta * it } }
     )
 
     override fun solvePart2(input: String): Int = solve(

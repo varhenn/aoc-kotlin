@@ -6,8 +6,10 @@ data class Point(val x: Int, val y: Int) {
     operator fun times(scalar: Int) = Point(x * scalar, y * scalar)
     operator fun unaryMinus() = Point(-x, -y)
 
+    fun cardinalNeighbors(): List<Point> = listOf(Point(x + 1, y), Point(x - 1, y), Point(x, y - 1), Point(x, y + 1))
+
     companion object {
-        fun allDirections(): List<Point> =
+        fun allNeighboringDirections(): List<Point> =
             (-1..1).flatMap { x -> (-1..1).map { y -> Point(x, y) } }.filter { it != Point(0, 0) }
     }
 }
