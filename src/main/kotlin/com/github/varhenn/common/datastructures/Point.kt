@@ -11,6 +11,11 @@ data class Point(val x: Int, val y: Int) {
     fun cardinalNeighbors(): List<Point> = listOf(Point(x + 1, y), Point(x - 1, y), Point(x, y - 1), Point(x, y + 1))
 
     companion object {
+        val north = Point(0, -1)
+        val south = Point(0, 1)
+        val west = Point(-1, 0)
+        val east = Point(1, 0)
+
         fun allNeighboringDirections(): List<Point> =
             (-1..1).flatMap { x -> (-1..1).map { y -> Point(x, y) } }.filter { it != Point(0, 0) }
     }
